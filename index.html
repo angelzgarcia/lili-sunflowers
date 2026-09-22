@@ -29,17 +29,15 @@
 
     #ui {
       position: fixed;
-      left: 50%;
-      bottom: 20px;
-      transform: translateX(-50%);
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-      justify-content: center;
-      padding: 12px 16px;
-      border-radius: 18px;
-      background: rgba(20, 24, 33, 0.72);
+      left: 8px;
+      right: 8px;
+      bottom: 8px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 16px;
+      background: rgba(20, 24, 33, 0.78);
       border: 1px solid rgba(255, 214, 102, 0.22);
       box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(16px) saturate(160%);
@@ -47,12 +45,38 @@
       color: #f5e6b8;
       font-size: 13px;
       z-index: 10;
-      max-width: calc(100vw - 24px);
       transition: background 0.4s ease, border-color 0.4s ease, color 0.4s ease;
     }
 
-    #ui label {
+    .ui-group {
       display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    @media (min-width: 900px) {
+      #ui {
+        left: 50%;
+        right: auto;
+        bottom: 20px;
+        transform: translateX(-50%);
+        grid-template-columns: auto auto auto;
+        padding: 12px 18px;
+        border-radius: 20px;
+        gap: 16px;
+        max-width: calc(100vw - 40px);
+      }
+
+      .ui-group {
+        gap: 12px;
+      }
+    }
+
+    #ui label {
+      display: inline-flex;
       align-items: center;
       gap: 8px;
       white-space: nowrap;
@@ -73,8 +97,8 @@
     #ui input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
-      width: 15px;
-      height: 15px;
+      width: 16px;
+      height: 16px;
       border-radius: 50%;
       background: #ffb628;
       cursor: pointer;
@@ -87,8 +111,8 @@
     }
 
     #ui input[type="range"]::-moz-range-thumb {
-      width: 15px;
-      height: 15px;
+      width: 16px;
+      height: 16px;
       border-radius: 50%;
       border: 0;
       background: #ffb628;
@@ -111,17 +135,16 @@
       font-family: inherit;
       display: inline-flex;
       align-items: center;
-      gap: 7px;
+      gap: 6px;
     }
 
     #ui button:hover {
       background: rgba(255, 182, 40, 0.22);
       border-color: rgba(255, 214, 102, 0.55);
-      transform: translateY(-1px);
     }
 
     #ui button:active {
-      transform: translateY(0);
+      transform: translateY(1px);
     }
 
     #ui .theme-toggle {
@@ -153,8 +176,61 @@
       text-align: left;
     }
 
+    #catalog {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding-bottom: 2px;
+      flex-wrap: nowrap;
+      max-width: 100%;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      mask-image: linear-gradient(to right, transparent 0, black 8px, black calc(100% - 8px), transparent 100%);
+      -webkit-mask-image: linear-gradient(to right, transparent 0, black 8px, black calc(100% - 8px), transparent 100%);
+    }
+
+    #catalog::-webkit-scrollbar {
+      display: none;
+    }
+
+    #catalog button {
+      flex-shrink: 0;
+      padding: 7px 12px;
+      font-size: 12px;
+      border-radius: 999px;
+      background: rgba(255, 182, 40, 0.06);
+      border: 1px solid rgba(255, 214, 102, 0.20);
+      color: #ffdd80;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    #catalog button:hover {
+      background: rgba(255, 182, 40, 0.16);
+      border-color: rgba(255, 214, 102, 0.40);
+    }
+
+    #catalog button.active {
+      background: rgba(255, 182, 40, 0.30);
+      border-color: rgba(255, 214, 102, 0.75);
+      color: #fff5cf;
+      box-shadow: 0 0 14px rgba(255, 182, 40, 0.25);
+    }
+
+    #catalog button .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
+    }
+
     body.night #ui {
-      background: rgba(12, 15, 25, 0.78);
+      background: rgba(12, 15, 25, 0.80);
       border-color: rgba(150, 180, 255, 0.22);
       color: #d0d8f0;
     }
@@ -168,6 +244,19 @@
     body.night #ui button:hover {
       background: rgba(140, 160, 220, 0.22);
       border-color: rgba(150, 180, 255, 0.50);
+    }
+
+    body.night #catalog button {
+      background: rgba(140, 160, 220, 0.06);
+      border-color: rgba(150, 180, 255, 0.22);
+      color: #c8d4f5;
+    }
+
+    body.night #catalog button.active {
+      background: rgba(140, 160, 220, 0.28);
+      border-color: rgba(150, 180, 255, 0.65);
+      color: #e8eeff;
+      box-shadow: 0 0 14px rgba(150, 180, 255, 0.25);
     }
 
     body.night #ui input[type="range"]::-webkit-slider-thumb {
@@ -207,6 +296,7 @@
       z-index: 20;
       font-size: 13px;
       font-weight: 500;
+      white-space: nowrap;
     }
 
     #toast.show {
@@ -214,26 +304,32 @@
       transform: translateX(-50%) translateY(0);
     }
 
-    @media (max-width: 640px) {
+    @media (max-width: 480px) {
       #ui {
-        gap: 8px;
-        padding: 10px 12px;
-        font-size: 12px;
-        bottom: 10px;
-      }
-
-      #ui input[type="range"] {
-        width: 64px;
+        padding: 8px 10px;
+        border-radius: 14px;
+        gap: 6px;
+        bottom: 6px;
+        left: 6px;
+        right: 6px;
       }
 
       #ui button {
         padding: 7px 10px;
         font-size: 11.5px;
-        gap: 5px;
       }
 
-      #ui .theme-toggle .theme-label {
-        display: none;
+      #ui input[type="range"] {
+        width: 70px;
+      }
+
+      #catalog button {
+        padding: 6px 10px;
+        font-size: 11.5px;
+      }
+
+      .ui-group {
+        gap: 6px;
       }
     }
   </style>
@@ -242,33 +338,39 @@
 <body>
   <canvas id="scene"></canvas>
   <div id="ui">
-    <button id="themeToggle" class="theme-toggle" aria-label="Alternar día y noche">
-      <svg class="icon-sun" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor"
-        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="4" />
-        <path
-          d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
-      </svg>
-      <svg class="icon-moon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor"
-        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-      </svg>
-      <span class="theme-label" id="themeLabel">Día</span>
-    </button>
+    <div class="ui-group">
+      <button id="themeToggle" class="theme-toggle" aria-label="Alternar día y noche">
+        <svg class="icon-sun" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="4" />
+          <path
+            d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+        </svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </svg>
+        <span class="theme-label" id="themeLabel">Día</span>
+      </button>
+      <div id="catalog"></div>
+    </div>
 
-    <label>Flores
-      <input id="count" type="range" min="1" max="12" value="5" />
-      <span class="val" id="countVal">5</span>
-    </label>
+    <div class="ui-group">
+      <label>Flores
+        <input id="count" type="range" min="1" max="14" value="7" />
+        <span class="val" id="countVal">7</span>
+      </label>
+      <label>Viento
+        <input id="wind" type="range" min="0" max="3" step="0.1" value="1" />
+        <span class="val" id="windVal">1.0</span>
+      </label>
+    </div>
 
-    <label>Viento
-      <input id="wind" type="range" min="0" max="3" step="0.1" value="1" />
-      <span class="val" id="windVal">1.0</span>
-    </label>
-
-    <button id="regen">Rehacer</button>
-    <button id="save">PNG</button>
-    <button id="share">Compartir</button>
+    <div class="ui-group">
+      <button id="regen">Rehacer</button>
+      <button id="save">PNG</button>
+      <button id="share">Compartir</button>
+    </div>
   </div>
   <div id="toast"></div>
 
@@ -287,15 +389,17 @@
       const windVal = document.getElementById('windVal');
       const themeToggle = document.getElementById('themeToggle');
       const themeLabel = document.getElementById('themeLabel');
+      const catalogEl = document.getElementById('catalog');
       const toast = document.getElementById('toast');
 
       let W = 0, H = 0, DPR = 1, S = 0;
       let time = 0;
-      let rng = mulberry32(Date.now() >>> 0);
+      let seed = 424242;
       let flowers = [];
       let particles = [];
-      let flowerCount = 5;
+      let flowerCount = 7;
       let windStrength = 1;
+      let currentType = 'girasol';
 
       let daySky = null;
       let nightSky = null;
@@ -314,14 +418,89 @@
         { x: 0.62, y: 0.19, size: 0.0055 },
       ];
 
-      function mulberry32(seed) {
+      const FLOWER_TYPES = {
+        girasol: {
+          label: 'Girasol',
+          swatch: '#ffb628',
+          base: { hue: 42, sat: 0.95, light: 0.55, petalR: 0.55, petalLen: 0.75, petalWid: 0.22 },
+          layers: [
+            { count: 16, rScale: 1.05, lenScale: 1.05, widScale: 1.10, hueShift: -6, satScale: 0.96, lightScale: 0.85, rotOffset: 0.00 },
+            { count: 16, rScale: 1.00, lenScale: 1.00, widScale: 1.00, hueShift: 0, satScale: 1.00, lightScale: 1.00, rotOffset: 0.50 },
+            { count: 12, rScale: 0.85, lenScale: 0.70, widScale: 0.85, hueShift: 10, satScale: 1.04, lightScale: 1.16, rotOffset: 0.00 },
+          ],
+          center: { ratio: 0.85, type: 'seeds' },
+        },
+        rosa: {
+          label: 'Rosa',
+          swatch: '#e8527c',
+          base: { hue: 342, sat: 0.78, light: 0.62, petalR: 0.40, petalLen: 0.95, petalWid: 0.38 },
+          layers: [
+            { count: 10, rScale: 1.20, lenScale: 1.15, widScale: 1.20, hueShift: -10, satScale: 0.90, lightScale: 0.72, rotOffset: 0.00 },
+            { count: 10, rScale: 1.00, lenScale: 0.95, widScale: 1.00, hueShift: 0, satScale: 1.00, lightScale: 0.95, rotOffset: 0.50 },
+            { count: 8, rScale: 0.75, lenScale: 0.70, widScale: 0.85, hueShift: 8, satScale: 1.02, lightScale: 1.10, rotOffset: 0.00 },
+            { count: 6, rScale: 0.45, lenScale: 0.45, widScale: 0.70, hueShift: 14, satScale: 1.00, lightScale: 1.22, rotOffset: 0.30 },
+          ],
+          center: { ratio: 0.32, type: 'flat', hue: 342, sat: 0.55, light: 0.48 },
+        },
+        tulipan: {
+          label: 'Tulipán',
+          swatch: '#e0405a',
+          base: { hue: 5, sat: 0.90, light: 0.60, petalR: 0.28, petalLen: 1.10, petalWid: 0.46 },
+          layers: [
+            { count: 5, rScale: 1.00, lenScale: 1.00, widScale: 1.00, hueShift: -6, satScale: 0.92, lightScale: 0.85, rotOffset: 0.00 },
+            { count: 4, rScale: 0.75, lenScale: 1.10, widScale: 0.90, hueShift: 6, satScale: 1.05, lightScale: 1.08, rotOffset: 0.50 },
+          ],
+          center: { ratio: 0.25, type: 'flat', hue: 5, sat: 0.80, light: 0.45 },
+        },
+        margarita: {
+          label: 'Margarita',
+          swatch: '#f5f5e8',
+          base: { hue: 52, sat: 0.10, light: 0.92, petalR: 0.42, petalLen: 0.72, petalWid: 0.17 },
+          layers: [
+            { count: 20, rScale: 1.00, lenScale: 1.00, widScale: 1.00, hueShift: 0, satScale: 1.00, lightScale: 0.96, rotOffset: 0.00 },
+            { count: 16, rScale: 0.78, lenScale: 0.78, widScale: 0.85, hueShift: 4, satScale: 1.00, lightScale: 1.04, rotOffset: 0.50 },
+          ],
+          center: { ratio: 0.55, type: 'flat', hue: 48, sat: 0.95, light: 0.58 },
+        },
+        loto: {
+          label: 'Loto',
+          swatch: '#f0a0c0',
+          base: { hue: 335, sat: 0.65, light: 0.72, petalR: 0.34, petalLen: 1.15, petalWid: 0.30 },
+          layers: [
+            { count: 12, rScale: 1.15, lenScale: 1.15, widScale: 1.00, hueShift: -8, satScale: 0.88, lightScale: 0.82, rotOffset: 0.00 },
+            { count: 10, rScale: 0.95, lenScale: 0.95, widScale: 0.95, hueShift: 0, satScale: 1.00, lightScale: 0.96, rotOffset: 0.50 },
+            { count: 8, rScale: 0.65, lenScale: 0.65, widScale: 0.80, hueShift: 10, satScale: 1.05, lightScale: 1.12, rotOffset: 0.00 },
+          ],
+          center: { ratio: 0.30, type: 'flat', hue: 50, sat: 0.90, light: 0.62 },
+        },
+        amapola: {
+          label: 'Amapola',
+          swatch: '#e03020',
+          base: { hue: 8, sat: 0.95, light: 0.50, petalR: 0.22, petalLen: 1.35, petalWid: 0.55 },
+          layers: [
+            { count: 5, rScale: 1.00, lenScale: 1.00, widScale: 1.00, hueShift: -8, satScale: 0.92, lightScale: 0.82, rotOffset: 0.00 },
+            { count: 5, rScale: 0.60, lenScale: 1.05, widScale: 0.92, hueShift: 6, satScale: 1.05, lightScale: 1.02, rotOffset: 0.50 },
+          ],
+          center: { ratio: 0.42, type: 'flat', hue: 25, sat: 0.35, light: 0.12 },
+        },
+      };
+
+      function mulberry32(s) {
         return function () {
-          seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
-          let t = seed;
+          s |= 0; s = (s + 0x6D2B79F5) | 0;
+          let t = s;
           t = Math.imul(t ^ (t >>> 15), t | 1);
           t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
           return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
         };
+      }
+
+      function hsl(h, s, l) {
+        return `hsl(${h}, ${Math.max(0, Math.min(100, s * 100))}%, ${Math.max(0, Math.min(100, l * 100))}%)`;
+      }
+
+      function hsla(h, s, l, a) {
+        return `hsla(${h}, ${Math.max(0, Math.min(100, s * 100))}%, ${Math.max(0, Math.min(100, l * 100))}%, ${a})`;
       }
 
       function resize() {
@@ -605,35 +784,42 @@
       }
 
       function makeFlowers(n) {
+        const cfg = FLOWER_TYPES[currentType] || FLOWER_TYPES.girasol;
+        const r = mulberry32(seed);
         const list = [];
         for (let i = 0; i < n; i++) {
           const t = n === 1 ? 0.5 : i / (n - 1);
           const centerBias = 1 - Math.abs(t - 0.5) * 2;
+          const hueVar = (r() - 0.5) * 16;
           list.push({
+            type: currentType,
             angle: (t - 0.5) * 1.15,
-            size: 0.72 + rng() * 0.28 + centerBias * 0.15,
-            len: 0.42 + rng() * 0.12 + centerBias * 0.1,
-            phase: rng() * TAU,
-            swayAmp: 0.8 + rng() * 0.6,
-            petalHue: 36 + rng() * 14,
-            petalCount: 16 + Math.floor(rng() * 6),
-            seedCount: 150 + Math.floor(rng() * 90),
-            leafSeed: rng(),
+            size: 0.72 + r() * 0.28 + centerBias * 0.15,
+            len: 0.42 + r() * 0.12 + centerBias * 0.1,
+            phase: r() * TAU,
+            swayAmp: 0.8 + r() * 0.6,
+            petalHue: cfg.base.hue + hueVar,
+            petalSat: cfg.base.sat * (0.96 + r() * 0.08),
+            petalLight: cfg.base.light * (0.96 + r() * 0.08),
+            petalCountExtra: Math.floor((r() - 0.5) * 4),
+            seedCount: 150 + Math.floor(r() * 90),
+            leafSeed: r(),
           });
         }
         return list;
       }
 
       function makeParticles(n) {
+        const r = mulberry32((Date.now() ^ 0xBEEF) >>> 0);
         const list = [];
         for (let i = 0; i < n; i++) {
           list.push({
-            x: rng() * W, y: rng() * H,
-            vx: (rng() - 0.5) * 0.15,
-            vy: -0.05 - rng() * 0.15,
-            r: 0.6 + rng() * 1.6,
-            a: 0.15 + rng() * 0.4,
-            hue: 40 + rng() * 20,
+            x: r() * W, y: r() * H,
+            vx: (r() - 0.5) * 0.15,
+            vy: -0.05 - r() * 0.15,
+            r: 0.6 + r() * 1.6,
+            a: 0.15 + r() * 0.4,
+            hue: 40 + r() * 20,
           });
         }
         return list;
@@ -719,16 +905,16 @@
         }
       }
 
-      function drawDisk(cx, cy, r, seedCount) {
+      function drawSeedsDisk(cx, cy, r, seedCount) {
         ctx.beginPath();
-        ctx.arc(cx, cy, r * 1.10, 0, TAU);
-        ctx.fillStyle = 'rgba(60, 40, 20, 0.30)';
+        ctx.arc(cx, cy, r * 1.08, 0, TAU);
+        ctx.fillStyle = 'rgba(40, 20, 5, 0.6)';
         ctx.fill();
 
         const bg = ctx.createRadialGradient(cx - r * 0.3, cy - r * 0.3, r * 0.1, cx, cy, r);
-        bg.addColorStop(0, '#b07a3a');
-        bg.addColorStop(0.55, '#7a4a20');
-        bg.addColorStop(1, '#4a2a10');
+        bg.addColorStop(0, '#7a4a1a');
+        bg.addColorStop(0.6, '#4a2a0e');
+        bg.addColorStop(1, '#1e0f04');
         ctx.beginPath();
         ctx.arc(cx, cy, r, 0, TAU);
         ctx.fillStyle = bg;
@@ -739,11 +925,11 @@
           const rr = Math.sqrt(i / seedCount) * r * 0.94;
           const x = cx + Math.cos(theta) * rr;
           const y = cy + Math.sin(theta) * rr;
-          const s = (1 - rr / r) * 1.4 + 0.55;
+          const s = (1 - rr / r) * 1.6 + 0.6;
           const sg = ctx.createRadialGradient(x - s * 0.3, y - s * 0.3, 0, x, y, s);
-          sg.addColorStop(0, '#f0c070');
-          sg.addColorStop(0.55, '#b8803a');
-          sg.addColorStop(1, '#6a4020');
+          sg.addColorStop(0, '#d99644');
+          sg.addColorStop(0.6, '#8a5a22');
+          sg.addColorStop(1, '#3a1e08');
           ctx.beginPath();
           ctx.arc(x, y, s, 0, TAU);
           ctx.fillStyle = sg;
@@ -754,12 +940,49 @@
         ctx.arc(cx, cy, r, 0, TAU);
         const rim = ctx.createRadialGradient(cx, cy, r * 0.7, cx, cy, r);
         rim.addColorStop(0, 'rgba(0,0,0,0)');
-        rim.addColorStop(1, 'rgba(255, 200, 90, 0.55)');
+        rim.addColorStop(1, 'rgba(255, 180, 60, 0.35)');
+        ctx.fillStyle = rim;
+        ctx.fill();
+      }
+
+      function drawFlatDisk(cx, cy, r, hue, sat, light) {
+        ctx.beginPath();
+        ctx.arc(cx, cy, r * 1.10, 0, TAU);
+        ctx.fillStyle = hsla(hue, sat * 1.05, light * 0.35, 0.55);
+        ctx.fill();
+
+        const bg = ctx.createRadialGradient(cx - r * 0.3, cy - r * 0.3, r * 0.1, cx, cy, r);
+        bg.addColorStop(0, hsl(hue + 5, sat * 0.85, Math.min(0.98, light * 1.18)));
+        bg.addColorStop(0.55, hsl(hue, sat, light));
+        bg.addColorStop(1, hsl(hue - 5, sat * 1.05, Math.max(0.10, light * 0.70)));
+        ctx.beginPath();
+        ctx.arc(cx, cy, r, 0, TAU);
+        ctx.fillStyle = bg;
+        ctx.fill();
+
+        const dots = 10 + Math.floor(r * 0.6);
+        for (let i = 0; i < dots; i++) {
+          const theta = (i * TAU) / dots + 0.15;
+          const rr = r * 0.55;
+          const x = cx + Math.cos(theta) * rr;
+          const y = cy + Math.sin(theta) * rr;
+          ctx.beginPath();
+          ctx.arc(x, y, r * 0.055, 0, TAU);
+          ctx.fillStyle = hsla(hue - 8, sat * 1.05, Math.max(0.08, light * 0.55), 0.45);
+          ctx.fill();
+        }
+
+        const rim = ctx.createRadialGradient(cx, cy, r * 0.7, cx, cy, r);
+        rim.addColorStop(0, 'rgba(0,0,0,0)');
+        rim.addColorStop(1, hsla(hue + 10, 0.95, 0.72, 0.35));
+        ctx.beginPath();
+        ctx.arc(cx, cy, r, 0, TAU);
         ctx.fillStyle = rim;
         ctx.fill();
       }
 
       function drawFlower(f, baseX, baseY) {
+        const cfg = FLOWER_TYPES[f.type] || FLOWER_TYPES.girasol;
         const len = H * f.len;
         const size = Math.min(W, H) * 0.085 * f.size;
         const sway = Math.sin(time * 0.8 + f.phase) * 22 * windStrength * f.swayAmp;
@@ -784,45 +1007,56 @@
           size * 1.1, true,
         );
 
-        const petalR = size * 0.55;
-        const petalLen = size * 0.75;
-        const petalWid = size * 0.22;
+        const petalR = size * cfg.base.petalR;
+        const petalLen = size * cfg.base.petalLen;
+        const petalWid = size * cfg.base.petalWid;
 
-        drawPetals(
-          headX, headY, petalR * 1.05, f.petalCount,
-          petalLen * 1.05, petalWid * 1.1,
-          `hsl(${f.petalHue}, 95%, 50%)`,
-          `hsl(${f.petalHue - 6}, 90%, 42%)`,
-          time * 0.05 + f.phase,
-        );
-        drawPetals(
-          headX, headY, petalR, f.petalCount,
-          petalLen, petalWid,
-          `hsl(${f.petalHue + 6}, 100%, 62%)`,
-          `hsl(${f.petalHue}, 95%, 52%)`,
-          time * 0.05 + f.phase + Math.PI / f.petalCount,
-        );
-        drawPetals(
-          headX, headY, petalR * 0.85, f.petalCount - 4,
-          petalLen * 0.7, petalWid * 0.85,
-          `hsl(${f.petalHue + 10}, 100%, 72%)`,
-          `hsl(${f.petalHue + 4}, 98%, 58%)`,
-          time * 0.05 + f.phase + (Math.PI / (f.petalCount - 4)) * 2,
-        );
+        for (let i = 0; i < cfg.layers.length; i++) {
+          const layer = cfg.layers[i];
+          const count = Math.max(3, layer.count + f.petalCountExtra);
+          const rot = time * 0.05 + f.phase + layer.rotOffset * Math.PI;
+          const innerColor = hsl(
+            f.petalHue + layer.hueShift,
+            Math.min(1, f.petalSat * layer.satScale),
+            Math.min(0.98, f.petalLight * layer.lightScale)
+          );
+          const outerColor = hsl(
+            f.petalHue + layer.hueShift - 4,
+            Math.min(1, f.petalSat * layer.satScale * 1.02),
+            Math.max(0.10, f.petalLight * layer.lightScale * 0.85)
+          );
+          drawPetals(
+            headX, headY,
+            petalR * layer.rScale,
+            count,
+            petalLen * layer.lenScale,
+            petalWid * layer.widScale,
+            innerColor, outerColor,
+            rot
+          );
+        }
 
-        drawDisk(headX, headY, petalR * 0.85, f.seedCount);
+        if (cfg.center.type === 'seeds') {
+          drawSeedsDisk(headX, headY, petalR * cfg.center.ratio, f.seedCount);
+        } else {
+          drawFlatDisk(
+            headX, headY,
+            petalR * cfg.center.ratio,
+            cfg.center.hue, cfg.center.sat, cfg.center.light
+          );
+        }
 
-        const gg = ctx.createRadialGradient(headX, headY, 0, headX, headY, petalR + petalLen);
-        gg.addColorStop(0, 'rgba(255, 200, 80, 0.15)');
-        gg.addColorStop(1, 'rgba(255, 200, 80, 0)');
+        const gg = ctx.createRadialGradient(headX, headY, 0, headX, headY, petalR + petalLen * 1.2);
+        gg.addColorStop(0, hsla(f.petalHue, 1.0, 0.75, 0.14));
+        gg.addColorStop(1, hsla(f.petalHue, 1.0, 0.75, 0));
         ctx.save();
         ctx.globalCompositeOperation = 'lighter';
         ctx.fillStyle = gg;
         ctx.fillRect(
-          headX - petalR - petalLen,
-          headY - petalR - petalLen,
-          (petalR + petalLen) * 2,
-          (petalR + petalLen) * 2,
+          headX - petalR - petalLen * 1.3,
+          headY - petalR - petalLen * 1.3,
+          (petalR + petalLen * 1.3) * 2,
+          (petalR + petalLen * 1.3) * 2,
         );
         ctx.restore();
       }
@@ -864,7 +1098,7 @@
         for (const p of particles) {
           p.x += p.vx + Math.sin(time * 0.4 + p.y * 0.01) * 0.15;
           p.y += p.vy;
-          if (p.y < -10) { p.y = H + 10; p.x = rng() * W; }
+          if (p.y < -10) { p.y = H + 10; p.x = Math.random() * W; }
           if (p.x < -10) p.x = W + 10;
           if (p.x > W + 10) p.x = -10;
           ctx.beginPath();
@@ -903,10 +1137,32 @@
         showToast._t = setTimeout(() => toast.classList.remove('show'), 2200);
       }
 
-      function applyState(n, w, night) {
+      function buildCatalog() {
+        catalogEl.innerHTML = '';
+        for (const key in FLOWER_TYPES) {
+          const type = FLOWER_TYPES[key];
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.dataset.type = key;
+          btn.innerHTML = `<span class="dot" style="background:${type.swatch}"></span>${type.label}`;
+          if (key === currentType) btn.classList.add('active');
+          btn.addEventListener('click', () => {
+            if (currentType === key) return;
+            currentType = key;
+            catalogEl.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            flowers = makeFlowers(flowerCount);
+            showToast(type.label);
+          });
+          catalogEl.appendChild(btn);
+        }
+      }
+
+      function applyState(n, w, night, type) {
         flowerCount = n;
         windStrength = w;
         isNight = night;
+        currentType = FLOWER_TYPES[type] ? type : 'girasol';
         themeTarget = night ? 1 : 0;
         themeMix = night ? 1 : 0;
         countSlider.value = String(n);
@@ -915,6 +1171,7 @@
         windVal.textContent = w.toFixed(1);
         document.body.classList.toggle('night', night);
         themeLabel.textContent = night ? 'Noche' : 'Día';
+        buildCatalog();
         flowers = makeFlowers(n);
       }
 
@@ -940,10 +1197,10 @@
       });
 
       document.getElementById('regen').addEventListener('click', () => {
-        rng = mulberry32((Date.now() ^ (Math.random() * 1e9)) >>> 0);
+        seed = (Math.random() * 0xFFFFFFF) >>> 0;
         flowers = makeFlowers(flowerCount);
         particles = makeParticles(60);
-        showToast('Nuevo ramo generado');
+        showToast('Nuevo ramo');
       });
 
       document.getElementById('save').addEventListener('click', () => {
@@ -951,7 +1208,7 @@
           const url = URL.createObjectURL(blob);
           const a = document.createElement('a');
           a.href = url;
-          a.download = `ramo-girasoles-${Date.now()}.png`;
+          a.download = `ramo-${currentType}-${Date.now()}.png`;
           a.click();
           setTimeout(() => URL.revokeObjectURL(url), 1500);
           showToast('Imagen descargada');
@@ -963,11 +1220,12 @@
           n: String(flowerCount),
           w: String(windStrength),
           t: isNight ? 'night' : 'day',
+          f: currentType,
         });
         const url = `${location.origin}${location.pathname}#${params.toString()}`;
         try {
           if (navigator.share) {
-            await navigator.share({ title: 'Ramo de Girasoles', url });
+            await navigator.share({ title: 'Ramo', url });
           } else if (navigator.clipboard) {
             await navigator.clipboard.writeText(url);
             showToast('Link copiado');
@@ -986,14 +1244,20 @@
         const n = parseInt(p.get('n') || '', 10);
         const w = parseFloat(p.get('w') || '');
         const t = p.get('t') || 'day';
-        if (!Number.isFinite(n) || n < 1 || n > 12) return null;
+        const f = p.get('f') || 'girasol';
+        if (!Number.isFinite(n) || n < 1 || n > 14) return null;
         if (!Number.isFinite(w) || w < 0 || w > 3) return null;
-        return { n, w, night: t === 'night' };
+        return { n, w, night: t === 'night', type: f };
       }
 
       resize();
       const initial = loadFromUrl();
-      applyState(initial ? initial.n : 5, initial ? initial.w : 1, initial ? initial.night : false);
+      applyState(
+        initial ? initial.n : 7,
+        initial ? initial.w : 1.0,
+        initial ? initial.night : false,
+        initial ? initial.type : 'girasol'
+      );
       particles = makeParticles(60);
       requestAnimationFrame(loop);
     })();
